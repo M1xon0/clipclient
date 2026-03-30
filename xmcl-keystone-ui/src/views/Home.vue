@@ -62,6 +62,7 @@ useGlobalDrop({
       const ext = file.name.split('.').pop()
       if (ext === 'zip' || ext === 'mrpack') {
         show(file.path)
+        return
       }
     }
   },

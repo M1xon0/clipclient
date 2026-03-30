@@ -170,7 +170,7 @@ const { versions } = injection(kLocalVersions)
 
 // Version lock – may be undefined if not provided (outside the ClipClient home)
 const versionLockerCtx = inject(kVersionLocker, null)
-const isVersionLocked = computed(() => versionLockerCtx?.isVersionLocked.value ?? false)
+const isVersionLocked = computed(() => versionLockerCtx?.isVersionLocked ?? false)
 
 const showAll = ref(false)
 const showForge = computed(() => props.isExpanded || showAll.value || instance.value.runtime.forge)

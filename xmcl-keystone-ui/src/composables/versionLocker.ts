@@ -17,7 +17,6 @@ export function useVersionLocker() {
   const { instance } = injection(kInstance)
   const { editInstance } = useService(InstanceServiceKey)
 
-  const isVersionLocked = computed(() => true)
   const lockedMinecraft = CLIPCLIENT_MINECRAFT_VERSION
   const lockedLoader = 'neoForge'
 
@@ -25,7 +24,8 @@ export function useVersionLocker() {
     const runtime = instance.value.runtime
     return (
       runtime.minecraft === CLIPCLIENT_MINECRAFT_VERSION &&
-      !!runtime.neoForged
+      !!runtime.neoForged &&
+      runtime.neoForged.startsWith(CLIPCLIENT_NEOFORGE_VERSION_PREFIX)
     )
   })
 
@@ -58,7 +58,8 @@ export function useVersionLocker() {
   )
 
   return {
-    isVersionLocked,
+    /** Version is always locked to Minecraft 1.21.1 + NeoForge in ClipClient */
+    isVersionLocked: true,
     isVersionCompliant,
     lockedMinecraft,
     lockedLoader,

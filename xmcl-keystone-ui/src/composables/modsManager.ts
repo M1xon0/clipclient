@@ -3,6 +3,7 @@ import { injection } from '@/util/inject'
 import { kInstanceModsContext } from './instanceMods'
 
 export const MODYCLIP_MODS_URL = 'https://raw.githubusercontent.com/M1xon0/modyclip/main/mods.json'
+export const MODS_SYNC_INTERVAL_MS = 30 * 60 * 1000
 
 export interface ClipMod {
   id: string
@@ -51,10 +52,9 @@ export function useModsManager() {
   }
 
   // Sync on mount, and every 30 minutes
-  const SYNC_INTERVAL_MS = 30 * 60 * 1000
   onMounted(() => {
     syncMods()
-    const timer = setInterval(syncMods, SYNC_INTERVAL_MS)
+    const timer = setInterval(syncMods, MODS_SYNC_INTERVAL_MS)
     onUnmounted(() => clearInterval(timer))
   })
 

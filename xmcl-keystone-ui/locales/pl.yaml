@@ -1641,4 +1641,4 @@ clipclient:
   versionLocked: Minecraft 1.21.1 · NeoForge (zablokowana)
   syncing: Synchronizacja...
   modSyncError: Błąd synchronizacji modów
-  lastSync: 'Ostatnia sync: {time}'
+  lastSync: 'Ostatnia synchronizacja: {time}'
