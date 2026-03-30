@@ -13,11 +13,6 @@
       icon: 'settings'
      } : undefined"
     :refreshing="false"
-    :addition-button="{ 
-      icon: 'file_download',
-      text: t('shared.install'),
-     }"
-    @navigate-addition="push('/resourcepacks?source=remote')"
     @navigate="push('/resourcepacks')"
     @dragenter="highlight += 1"
     @dragleave="highlight -= 1"

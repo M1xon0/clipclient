@@ -83,6 +83,17 @@
 
         <div class="sidebar-notch__divider moveable" />
 
+        <!-- Discord -->
+        <AppSideBarNotchItem
+          icon="chat"
+          :icon-size="iconSize"
+          :tooltip="() => ({ text: 'Discord', direction: tooltipDirection })"
+          clickable
+          @click="openDiscord"
+        />
+
+        <div class="sidebar-notch__divider moveable" />
+
         <!-- Settings -->
         <AppSideBarNotchItem
           :icon-size="iconSize"
@@ -235,6 +246,9 @@ function goMultiplayer() {
   windowController.openMultiplayerWindow()
 }
 
+function openDiscord() {
+  window.open('https://discord.gg/clipsmp')
+}
 watch([autoHide, align, position, scale], ([newAutoHide]) => {
   if (newAutoHide) {
     isHovered.value = true

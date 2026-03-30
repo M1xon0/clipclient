@@ -8,17 +8,12 @@
     :text="dragover ? t('mod.dropHint') : t('mod.enabled', { count: enabledMods.length })"
     :icons="icons"
     :refreshing="isValidating"
-    :addition-button="noAction ? undefined : { 
-      icon: 'file_download',
-      text: t('shared.install'),
-     }"
     :button="noAction || mods.length === 0 ? undefined : {
       text: t('shared.manage'),
       icon: 'settings'
      }"
     :error="error"
     @navigate="push('/mods')"
-    @navigate-addition="push('/mods?source=remote')"
     @drop="onDrop"
   />
 </template>

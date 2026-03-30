@@ -49,6 +49,7 @@
             :text="item.text"
             :highlighted="item.highlighted"
             :loading="updating"
+            :no-install="!item.install"
             @install="item.install"
             @setting="item.setting"
             @drop="item.drop"
@@ -375,7 +376,7 @@ const items = computed(() => {
         tooltip: t('mod.name'),
         text: dragover.value ? t('mod.dropHint') : t('mod.enabled', { count: enabledMods.value.length }),
         highlighted: false,
-        install: () => push('/mods?source=remote'),
+        install: undefined,
         setting: () => push('/mods'),
         drop: onDropMod
       },
@@ -384,7 +385,7 @@ const items = computed(() => {
         tooltip: t('resourcepack.name'),
         text: dragover.value ? t('resourcepack.dropHint') : t('resourcepack.enable', { count: enabledResourcePacks.value.length }),
         highlighted: false,
-        install: () => push('/resourcepacks?source=remote'),
+        install: undefined,
         setting: () => push('/resourcepacks'),
         drop: onDropResourcePack
       },
@@ -393,7 +394,7 @@ const items = computed(() => {
         tooltip: t('shaderPack.name'),
         text: dragover.value ? t('shaderPack.dropHint') : !shaderPack.value ? t('shaderPack.empty') : shaderPack.value,
         highlighted: false,
-        install: () => push('/shaderpacks?source=remote'),
+        install: undefined,
         setting: () => push('/shaderpacks'),
         drop: onDropShaderPack
       },
@@ -402,7 +403,7 @@ const items = computed(() => {
         tooltip: t('save.name'),
         text: dragover.value ? t('save.dropHint') : t('save.createdWorlds', { count: savesLength.value }),
         highlighted: false,
-        install: () => push('/save?source=remote'),
+        install: undefined,
         setting: () => push('/save'),
         drop: onDropSave
       }
@@ -444,7 +445,7 @@ const items = computed(() => {
       tooltip: t('mod.name'),
       text: dragover.value ? t('mod.dropHint') : t('mod.enabled', { count: enabledMods.value.length }),
       highlighted: false,
-      install: () => push('/mods?source=remote'),
+      install: undefined,
       setting: () => push('/mods'),
       drop: onDropMod
     }]

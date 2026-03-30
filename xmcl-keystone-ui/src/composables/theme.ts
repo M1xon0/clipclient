@@ -81,7 +81,7 @@ export function getDefaultTheme(): UIThemeDataV1 {
       lightSideBarColor: '#FFFFFFFF',
       darkAppBarColor: '#111111FF',
       darkSideBarColor: '#11111166',
-      darkPrimaryColor: '#4caf50',
+      darkPrimaryColor: '#32ff96',
       darkBackground: '#121212A5',
       darkInfoColor: '#2196F3',
       darkErrorColor: '#FF5252',

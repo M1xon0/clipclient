@@ -81,6 +81,18 @@
         <v-list-item-title>{{ t('multiplayer.name') }}</v-list-item-title>
       </v-list-item>
 
+      <v-list-item
+        v-shared-tooltip.right="_ => 'Discord'"
+        link
+        class="non-moveable"
+        @click="openDiscord"
+      >
+        <v-list-item-icon>
+          <v-icon :size="23">chat</v-icon>
+        </v-list-item-icon>
+        <v-list-item-title>Discord</v-list-item-title>
+      </v-list-item>
+
       <v-divider
         class="mx-1 block"
       />
@@ -204,6 +216,10 @@ function goBack() {
 
 function goMultiplayer() {
   windowController.openMultiplayerWindow()
+}
+
+function openDiscord() {
+  window.open('https://discord.gg/clipsmp')
 }
 </script>
 

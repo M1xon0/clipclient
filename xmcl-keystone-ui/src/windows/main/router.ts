@@ -1,7 +1,7 @@
 import BaseSetting from '@/views/BaseSetting.vue'
 import BaseSettingActions from '@/views/BaseSettingActions.vue'
 import BaseSettingExtension from '@/views/BaseSettingExtension.vue'
-import Home from '@/views/Home.vue'
+import ClipClientHome from '@/views/ClipClientHome.vue'
 import HomeActions from '@/views/HomeActions.vue'
 import HomeExtension from '@/views/HomeExtension.vue'
 import HomeLayout from '@/views/HomeLayout.vue'
@@ -38,7 +38,7 @@ export const router = new Router({
         {
           path: '/',
           components: {
-            default: Home,
+            default: ClipClientHome,
             extensions: HomeExtension,
             actions: HomeActions,
           },

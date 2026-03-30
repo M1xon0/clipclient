@@ -20,7 +20,7 @@
       </span>
     </div>
     <div class="flex-grow" />
-    <v-btn :loading="loading" class="controls" v-if="!dragover" :color="isHovered ? 'primary' : 'default'" text small @click.stop="emit('install')">
+    <v-btn :loading="loading" class="controls" v-if="!dragover && !noInstall" :color="isHovered ? 'primary' : 'default'" text small @click.stop="emit('install')">
       <span class="transition-all transition-duration-300" :style="{ opacity: isHovered ? 1 : 0 }">
         {{ t('shared.install') }}
       </span>
@@ -43,6 +43,7 @@ defineProps<{
   text?: string
   highlighted?: boolean
   loading?: boolean
+  noInstall?: boolean
 }>()
 
 const { isDark } = injection(kTheme)
