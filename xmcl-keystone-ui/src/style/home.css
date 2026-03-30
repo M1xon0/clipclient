@@ -1,0 +1,16 @@
+/* ClipClient Home Screen Styles */
+
+/* Main home area - clean background */
+.clip-home {
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+}
+
+/* ClipClient brand colors */
+:root {
+  --clip-green: #32ff96;
+  --clip-pink: #ff3296;
+  --clip-green-dim: rgba(50, 255, 150, 0.15);
+  --clip-pink-dim: rgba(255, 50, 150, 0.15);
+}
