@@ -19,7 +19,7 @@
       }"
     >
       <div
-        class="align-center flex max-h-20 flex-1 flex-grow-0 items-baseline pl-6 pr-2 gap-1"
+        class="align-center flex max-h-20 flex-1 flex-grow-0 items-center pl-6 pr-2 gap-1"
       >
         <span
           :style="{
@@ -35,6 +35,8 @@
         >
           <router-view class="flex-shrink-0" name="actions" />
         </transition>
+        <!-- User login area -->
+        <AppSystemBarUserMenu class="ml-2 flex-shrink-0" />
       </div>
       <transition
         name="slide-y-reverse-transition"
@@ -85,6 +87,7 @@ import { kCompact } from '@/composables/scrollTop'
 import { kTheme } from '@/composables/theme'
 import { useInFocusMode } from '@/composables/uiLayout'
 import { injection } from '@/util/inject'
+import AppSystemBarUserMenu from './AppSystemBarUserMenu.vue'
 
 const { name, runtime: version } = injection(kInstance)
 const isInFocusMode = useInFocusMode()

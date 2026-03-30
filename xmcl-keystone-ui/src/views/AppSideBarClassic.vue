@@ -3,94 +3,72 @@
     v-if="!isHorizontal"
     :value="true"
     permanent
-    :mini-variant="true"
+    :width="210"
     :color="sideBarColor"
     class="sidebar moveable z-10 rounded-[0.75rem]"
     :style="{ 'backdrop-filter': `blur(${blurSidebar}px)` }"
   >
-    <v-list
-      nav
-      dense
-      class="ml-1 px-2"
-    >
-      <v-list-item
-        class="non-moveable"
-        @click="goBack"
+    <!-- Logo -->
+    <div class="flex justify-center px-4 pt-5 pb-4 non-moveable">
+      <img
+        :src="logoImg"
+        alt="ClipClient"
+        class="w-full object-contain"
+        style="max-height: 72px;"
       >
-        <v-icon class="text-[18px]">
-          arrow_back
-        </v-icon>
-      </v-list-item>
-
-      <v-list-item
-        id="my-stuff-button"
-        v-shared-tooltip.right="_ => t('myStuff')"
-        link
-        push
-        to="/me"
-        class="non-moveable"
-      >
-        <v-list-item-icon>
-          <v-icon> widgets </v-icon>
-        </v-list-item-icon>
-        <v-list-item-title v-text="t('myStuff')" />
-      </v-list-item>
-      <v-list-item
-        v-if="true"
-        v-shared-tooltip.right="_ => t('store.name', 2)"
-        link
-        push
-        to="/store"
-        class="non-moveable"
-      >
-        <v-list-item-icon>
-          <v-icon
-            :size="28"
-          >
-            store
-          </v-icon>
-        </v-list-item-icon>
-        <v-list-item-title v-text="t('store.name', 2)" />
-      </v-list-item>
-      <v-divider />
-    </v-list>
-
-    <div class="flex-1 h-full overflow-y-auto">
-      <AppSideBarInstances />
     </div>
 
-    <v-list
-      nav
-      dense
-      class="ml-1 px-2"
-      style=""
-    >
+    <v-divider class="mx-3 mb-3" />
+
+    <!-- Graj (Play) -->
+    <div class="px-3 mb-3">
+      <v-btn
+        block
+        :color="launchColor"
+        :loading="launching"
+        :disabled="isValidating"
+        class="graj-btn non-moveable"
+        @click="onLaunchClick()"
+      >
+        <v-icon left>
+          play_arrow
+        </v-icon>
+        Graj
+      </v-btn>
+    </div>
+
+    <!-- Nav items -->
+    <v-list nav dense class="px-2">
+      <!-- Mody -->
       <v-list-item
-        v-shared-tooltip.right="_ => t('multiplayer.name')"
         link
-        class="non-moveable"
-        @click="goMultiplayer"
+        push
+        to="/mods"
+        class="non-moveable sidebar-item"
       >
         <v-list-item-icon>
-          <v-icon
-            :size="23"
-          >
-            hub
-          </v-icon>
+          <v-icon>extension</v-icon>
         </v-list-item-icon>
-        <v-list-item-title>{{ t('multiplayer.name') }}</v-list-item-title>
+        <v-list-item-title>Mody</v-list-item-title>
       </v-list-item>
 
-      <v-divider
-        class="mx-1 block"
-      />
-
+      <!-- Discord -->
       <v-list-item
-        v-shared-tooltip.right="_ => t('setting.name', 2)"
+        class="non-moveable sidebar-item"
+        @click="openDiscord"
+      >
+        <v-list-item-icon>
+          <v-icon>chat_bubble</v-icon>
+        </v-list-item-icon>
+        <v-list-item-title>Discord</v-list-item-title>
+      </v-list-item>
+
+      <!-- Ustawienia -->
+      <v-list-item
         link
         push
         to="/setting"
-        class="non-moveable"
+        class="non-moveable sidebar-item"
       >
         <v-list-item-icon>
           <v-badge
@@ -101,12 +79,10 @@
             <template #badge>
               <span>{{ 1 }}</span>
             </template>
-            <v-icon>
-              settings
-            </v-icon>
+            <v-icon>settings</v-icon>
           </v-badge>
         </v-list-item-icon>
-        <v-list-item-title>{{ t('setting.name', 2) }}</v-list-item-title>
+        <v-list-item-title>Ustawienia</v-list-item-title>
       </v-list-item>
     </v-list>
   </v-navigation-drawer>
@@ -116,104 +92,102 @@
     class="sidebar-horizontal moveable z-10 rounded-[0.75rem] flex flex-row items-center px-2 h-12 mx-2 my-2 elevation-4"
     :style="{ 'backdrop-filter': `blur(${blurSidebar}px)`, backgroundColor: sideBarColor }"
   >
-    <div class="flex flex-row items-center flex-grow-0">
-      <v-btn icon class="non-moveable mr-1" @click="goBack">
-        <v-icon>arrow_back</v-icon>
-      </v-btn>
+    <img
+      :src="logoImg"
+      alt="ClipClient"
+      class="h-8 object-contain mr-3 non-moveable"
+    >
 
-      <v-btn
-        id="my-stuff-button"
-        icon
-        to="/me"
-        class="non-moveable mr-1"
-        v-shared-tooltip.bottom="t('myStuff')"
+    <v-btn
+      small
+      :color="launchColor"
+      :loading="launching"
+      :disabled="isValidating"
+      class="non-moveable mr-2 graj-btn"
+      @click="onLaunchClick()"
+    >
+      <v-icon left small>
+        play_arrow
+      </v-icon>
+      Graj
+    </v-btn>
+
+    <v-btn
+      icon
+      to="/mods"
+      class="non-moveable mr-1"
+      v-shared-tooltip.bottom="'Mody'"
+    >
+      <v-icon>extension</v-icon>
+    </v-btn>
+
+    <v-btn
+      icon
+      class="non-moveable mr-1"
+      v-shared-tooltip.bottom="'Discord'"
+      @click="openDiscord"
+    >
+      <v-icon>chat_bubble</v-icon>
+    </v-btn>
+
+    <v-btn
+      icon
+      to="/setting"
+      class="non-moveable"
+      v-shared-tooltip.bottom="'Ustawienia'"
+    >
+      <v-badge
+        right
+        overlap
+        :value="state?.updateStatus !== 'none'"
       >
-        <v-icon>widgets</v-icon>
-      </v-btn>
-
-      <v-btn
-        icon
-        to="/store"
-        class="non-moveable mr-1"
-        v-shared-tooltip.bottom="t('store.name', 2)"
-      >
-        <v-icon :size="28">store</v-icon>
-      </v-btn>
-      
-      <v-divider vertical class="mx-2 h-6" />
-    </div>
-
-    <div class="flex-grow-1 overflow-hidden h-full flex items-center relative" style="min-width: 0;">
-      <AppSideBarContentNext :horizontal="true" />
-    </div>
-
-    <div class="flex flex-row items-center flex-grow-0">
-      <v-divider vertical class="mx-2 h-6" />
-
-      <v-btn
-        icon
-        class="non-moveable mr-1"
-        @click="goMultiplayer"
-        v-shared-tooltip.bottom="t('multiplayer.name')"
-      >
-        <v-icon :size="23">hub</v-icon>
-      </v-btn>
-
-      <v-btn
-        icon
-        to="/setting"
-        class="non-moveable"
-        v-shared-tooltip.bottom="t('setting.name', 2)"
-      >
-        <v-badge
-          right
-          overlap
-          :value="state?.updateStatus !== 'none'"
-        >
-          <template #badge>
-            <span>{{ 1 }}</span>
-          </template>
-          <v-icon>settings</v-icon>
-        </v-badge>
-      </v-btn>
-    </div>
+        <template #badge>
+          <span>{{ 1 }}</span>
+        </template>
+        <v-icon>settings</v-icon>
+      </v-badge>
+    </v-btn>
   </div>
 </template>
 
 <script lang=ts setup>
+import logoImg from '@/assets/logo.webp'
+import { kLaunchButton } from '@/composables/launchButton'
+import { kInstances } from '@/composables/instances'
 import { kSettingsState } from '@/composables/setting'
 import { useInjectSidebarSettings } from '@/composables/sidebarSettings'
 import { kTheme } from '@/composables/theme'
 import { vSharedTooltip } from '@/directives/sharedTooltip'
 import { injection } from '@/util/inject'
-import AppSideBarInstances from './AppSideBarInstances.vue'
+
+const DISCORD_URL = 'https://discord.gg/W5XVwYY7GQ'
 
 const { blurSidebar } = injection(kTheme)
 const { state } = injection(kSettingsState)
 const { position } = useInjectSidebarSettings()
+const { isValidating } = injection(kInstances)
 
 const isHorizontal = computed(() => position.value === 'top' || position.value === 'bottom')
 
-const { t } = useI18n()
 const { sideBarColor } = injection(kTheme)
-const { back } = useRouter()
+const { onClick: onLaunchClick, color: launchColor, loading: launching } = injection(kLaunchButton)
 
-function goBack() {
-  back()
-}
-
-function goMultiplayer() {
-  windowController.openMultiplayerWindow()
+function openDiscord() {
+  window.open(DISCORD_URL, 'browser')
 }
 </script>
 
 <style scoped>
 .sidebar {
-  min-width: 80px;
+  min-width: 210px;
   max-height: 100%;
   display: flex;
   flex-direction: column;
-  /* @apply rounded-r-xl border-r-[hsla(0,0%,100%,.12)]; */
+}
+
+.graj-btn {
+  font-weight: 700;
+  letter-spacing: 0.05em;
 }
 </style>
 <style>
@@ -232,7 +206,6 @@ function goMultiplayer() {
 }
 
 .sidebar .v-list .v-list-item--active, .v-list .v-list-item--active .v-icon {
-  /* color: #4caf50 !important; */
   color: var(--color-primary);
 }
 
