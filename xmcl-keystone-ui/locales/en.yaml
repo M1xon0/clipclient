@@ -604,6 +604,8 @@ login:
   dropHint: Drop the link with authcode here to manually login
   forgetPassword: Forget Password?
   login: Login
+  loginDescription: Sign in with your Minecraft account to play.
+  loggedIn: Logged in
   manualLoginUrl: If the browser doesn't show up, please click this link to auth!
   signup: Sign up
   signupDescription: New to us?
@@ -1637,6 +1639,8 @@ user:
   tokenValidUntil: Token Valid Until
 userAccount:
   add: Add Account
+  loggedIn: Logged in
+  manage: Manage Account
   removeDescription: This will remove all info for this account. Are you sure?
   removeTitle: Remove Account
 userCape:
@@ -1697,3 +1701,8 @@ versionType:
   beta: Beta
   name: Status
   release: Release
+clipclient:
+  versionLocked: Minecraft 1.21.1 · NeoForge (locked)
+  syncing: Syncing...
+  modSyncError: Mod sync failed
+  lastSync: 'Last sync: {time}'

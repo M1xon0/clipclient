@@ -1637,3 +1637,8 @@ userSkin:
   urlNotEmpty: Adres URL skórki nie może być pusty
   urlNotValid: Adres URL skórki jest nieprawidłowy
   useSlim: Użyj modelu Slim
+clipclient:
+  versionLocked: Minecraft 1.21.1 · NeoForge (zablokowana)
+  syncing: Synchronizacja...
+  modSyncError: Błąd synchronizacji modów
+  lastSync: 'Ostatnia sync: {time}'

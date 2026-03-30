@@ -1,74 +1,56 @@
 <template>
   <div
     ref="scrollElement"
-    class="select-none"
+    class="clipclient-home select-none flex h-full w-full overflow-hidden"
   >
     <HomeCriticalError />
-    <transition name="slide-y-reverse-transition" mode="out-in">
-      <div v-if="!isFocus" class="mx-3 relative" >
-        <Transition name="slide-y-reverse-transition">
-          <div class="flex items-center justify-center gap-1 sticky top-40 z-3">
-            <v-divider
-              class="divider mx-0"
-            />
-            <v-btn class="z-4" icon @click="isFocus = true">
-              <v-icon>
-                keyboard_arrow_down
-              </v-icon>
-            </v-btn>
-            <v-divider
-              class="divider mx-0"
-            />
-          </div>
-        </Transition>
-        <HomeGrid />
-        <HomeUpstreamCurseforge
-          v-if="instance.upstream && instance.upstream.type === 'curseforge-modpack'"
-          :id="instance.upstream.modId"
-        />
-        <HomeUpstreamModrinth
-          v-else-if="instance.upstream && instance.upstream.type === 'modrinth-modpack'"
-          :id="instance.upstream.projectId"
-        />
-        <HomeUpstreamFeedTheBeast
-          v-else-if="instance.upstream && instance.upstream.type === 'ftb-modpack'"
-          :id="instance.upstream.id"
-        />
-      </div>
-      <HomeFocusFooter
-        v-else
-        class="absolute bottom-0 left-0 pb-[26px]"
-      />
-    </transition>
-    <!-- <ScreenshotGalleryDialog /> -->
+
+    <!-- Left Panel: Login -->
+    <div class="login-panel flex-none w-[340px] flex flex-col">
+      <LoginScreen />
+    </div>
+
+    <!-- Divider -->
+    <div class="panel-divider w-px bg-white bg-opacity-10 flex-none self-stretch" />
+
+    <!-- Right Panel: Game -->
+    <div class="game-panel-wrapper flex-1 flex flex-col">
+      <GamePanel />
+    </div>
+
+    <!-- Dialogs (preserved from original) -->
+    <HomeLogDialog />
+    <HomeDropModpackDialog />
+    <HomeLaunchMultiInstanceDialog />
+    <HomeLaunchStatusDialog />
+    <HomeInstanceInstallDialog />
+    <AppCollectionDialog />
   </div>
 </template>
+
 <script lang="ts" setup>
 import { useDialog } from '@/composables/dialog'
 import { useGlobalDrop } from '@/composables/dropHandler'
 import { kInstance } from '@/composables/instance'
-import { kUpstream } from '@/composables/instanceUpdate'
-import { kCompact } from '@/composables/scrollTop'
-import { useTutorial } from '@/composables/tutorial'
-import { useInFocusMode } from '@/composables/uiLayout'
+import { kModsManager, useModsManager } from '@/composables/modsManager'
+import { kVersionLocker, useVersionLocker } from '@/composables/versionLocker'
 import { injection } from '@/util/inject'
-import type { DriveStep } from 'driver.js'
+import GamePanel from '@/components/GamePanel.vue'
+import LoginScreen from '@/components/LoginScreen.vue'
 import HomeCriticalError from './HomeCriticalError.vue'
-import HomeFocusFooter from './HomeFocusFooterV2.vue'
-import HomeGrid from './HomeGrid.vue'
-import HomeUpstreamCurseforge from './HomeUpstreamCurseforge.vue'
-import HomeUpstreamFeedTheBeast from './HomeUpstreamFeedTheBeast.vue'
-import HomeUpstreamModrinth from './HomeUpstreamModrinth.vue'
-// import ScreenshotGalleryDialog from '@/components/ScreenshotGalleryDialog.vue'
+import AppCollectionDialog from './AppCollectionDialog.vue'
+import HomeDropModpackDialog from './HomeDropModpackDialog.vue'
+import HomeInstanceInstallDialog from './HomeInstanceInstallDialog.vue'
+import HomeLaunchMultiInstanceDialog from './HomeLaunchMultiInstanceDialog.vue'
+import HomeLaunchStatusDialog from './HomeLaunchStatusDialog.vue'
+import HomeLogDialog from './HomeLogDialog.vue'
 
-const isFocus = useInFocusMode()
-const { instance } = injection(kInstance)
-provide(kUpstream, computed(() => ({ upstream: instance.value.upstream, minecraft: instance.value.runtime.minecraft })))
+// Provide version locking and mods manager to child components
+const versionLocker = useVersionLocker()
+provide(kVersionLocker, versionLocker)
 
-const compact = injection(kCompact)
-onMounted(() => {
-  compact.value = false
-})
+const modsManager = useModsManager()
+provide(kModsManager, modsManager)
 
 const { show } = useDialog('HomeDropModpackDialog')
 
@@ -80,7 +62,6 @@ useGlobalDrop({
       const ext = file.name.split('.').pop()
       if (ext === 'zip' || ext === 'mrpack') {
         show(file.path)
-        return
       }
     }
   },
@@ -88,15 +69,19 @@ useGlobalDrop({
 
 const scrollElement = ref(null as HTMLElement | null)
 provide('scrollElement', scrollElement)
-
-const { t } = useI18n()
-useTutorial(computed(() => {
-  const steps: DriveStep[] = [
-    { element: '#user-avatar', popover: { title: t('userAccount.add'), description: t('tutorial.userAccountDescription') } },
-    { element: '#create-instance-button', popover: { title: t('instances.add'), description: t('tutorial.instanceAddDescription') } },
-    { element: '#launch-button', popover: { title: t('launch.launch'), description: t('tutorial.launchDescription') } },
-    { element: '#feedback-button', popover: { title: t('feedback.name'), description: t('tutorial.feedbackDescription') } },
-  ]
-  return steps
-}))
 </script>
+
+<style scoped>
+.clipclient-home {
+  background: transparent;
+  min-height: 0;
+}
+
+.login-panel {
+  min-height: 0;
+}
+
+.game-panel-wrapper {
+  min-height: 0;
+}
+</style>
